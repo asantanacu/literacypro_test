@@ -26,4 +26,20 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Get the bands for the user.
+     */
+    public function bands()
+    {
+        return $this->hasMany('App\Band');
+    }  
+
+    /**
+     * Get all of the albums for the user.
+     */
+    public function albums()
+    {
+        return $this->hasManyThrough('App\Album', 'App\Band');
+    }
 }

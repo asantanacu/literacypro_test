@@ -13,7 +13,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+
     }
 
     /**
@@ -23,6 +23,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        // get all the bands
+        $bands = \App\Band::sortable()->paginate(10);
+
+        return view('home', compact('bands'));
     }
 }

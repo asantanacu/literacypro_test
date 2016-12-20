@@ -25,6 +25,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('access-band', function ($user, $band) {
+            return $user->id == $band->user_id;
+        });
+
+        Gate::define('access-album', function ($user, $album) {
+            return $user->id == $album->band->user_id;
+        });        
     }
 }
