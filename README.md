@@ -2,7 +2,8 @@
 LiteracyPro Test
 
 #Step 1 Get source code
-Clone the project
+Clone the project from https://github.com/asantanacu/literacypro_test.git
+or download and unzip the files.
 
 #Step 2 Install vendors
 Run composer install
