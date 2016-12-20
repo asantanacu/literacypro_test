@@ -30,7 +30,7 @@ php artisan migrate
 #Step 7 run seeds to insert dummy inital data
 php artisan db:seed
 
-#Step 8 point the host to the publi folder
+#Step 8 point the host to the public folder
 
 #Step 9 navigate to the website and login with the seeds data
 user: literacypro_test@gmail.com  
