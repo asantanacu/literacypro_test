@@ -16,7 +16,7 @@ class BandController extends Controller
     public function __construct()
     {
         $this->middleware('can:access-band,band')->except('index','create','store');
-    }	
+    }    
     /**
      * Display a listing of the resource.
      *
@@ -24,11 +24,11 @@ class BandController extends Controller
      */
     public function index()
     {
-		// get all the bands
-		$bands = Auth::user()->bands()->sortable()->paginate(10);
+        // get all the bands
+        $bands = Auth::user()->bands()->sortable()->paginate(10);
 
-		// load the view and pass the bands
-		return view('bands.index', compact('bands'));
+        // load the view and pass the bands
+        return view('bands.index', compact('bands'));
     }
 
     /**
@@ -38,7 +38,7 @@ class BandController extends Controller
      */
     public function create()
     {
-		return view('bands.edit');
+        return view('bands.edit');
     }
 
     /**
@@ -48,10 +48,10 @@ class BandController extends Controller
      */
     public function store(Request $request)
     {
-    	//create band
-	    Auth::user()->bands()->create($request->all());
-	    //redirect
-	    return redirect()->route('band.index')->with('message', 'Successfully created band!');    	
+        //create band
+        Auth::user()->bands()->create($request->all());
+        //redirect
+        return redirect()->route('band.index')->with('message', 'Successfully created band!');        
     }
 
     /**
@@ -62,8 +62,8 @@ class BandController extends Controller
      */
     public function show(Band $band)
     {
-		// show the view and pass the band to it
-		return view('bands.show', compact('band'));
+        // show the view and pass the band to it
+        return view('bands.show', compact('band'));
     }
 
     /**
@@ -74,8 +74,8 @@ class BandController extends Controller
      */
     public function edit(Band $band)
     {
-		// show the edit form and pass the band
-		return view('bands.edit', compact('band'));
+        // show the edit form and pass the band
+        return view('bands.edit', compact('band'));
     }
 
     /**
@@ -86,10 +86,10 @@ class BandController extends Controller
      */
     public function update(Band $band, Request $request)
     {
-    	// update band
-    	$band->fill($request->all())->save();
-    	// redirect
-		return redirect()->route('band.index')->with('message', 'Successfully updated band!');
+        // update band
+        $band->fill($request->all())->save();
+        // redirect
+        return redirect()->route('band.index')->with('message', 'Successfully updated band!');
     }
 
     /**
@@ -100,9 +100,9 @@ class BandController extends Controller
      */
     public function destroy(Band $band)
     {
-		// delete band
-		$band->delete();
-		// redirect
-		return redirect()->back()->with('message', 'Successfully deleted the Band!');
+        // delete band
+        $band->delete();
+        // redirect
+        return redirect()->back()->with('message', 'Successfully deleted the Band!');
     }
 }

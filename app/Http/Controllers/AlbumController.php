@@ -9,7 +9,7 @@ use Auth;
 class AlbumController extends Controller
 {
     /**
-     * Instantiate a new controller instance.
+    * Instantiate a new controller instance.
      *
      * @return void
      */
@@ -25,12 +25,12 @@ class AlbumController extends Controller
      */
     public function index()
     {
-		// get all the albums
-		$albums = Auth::user()->albums()->filterBand(\Request::get('band_id'))->sortable()->paginate(10);
+        // get all the albums
+        $albums = Auth::user()->albums()->filterBand(\Request::get('band_id'))->sortable()->paginate(10);
         //get all the bands
         $bands = Auth::user()->bands()->pluck('name', 'id');
 
-		// load the view and pass the albums
+        // load the view and pass the albums
         return view('albums.index', compact('albums', 'bands'));
     }
 
@@ -43,7 +43,7 @@ class AlbumController extends Controller
     {
         //get all the bands
         $bands = Auth::user()->bands()->pluck('name', 'id');
-		return view('albums.edit', compact('bands'));
+        return view('albums.edit', compact('bands'));
     }
 
     /**
@@ -69,8 +69,8 @@ class AlbumController extends Controller
      */
     public function show(Album $album)
     {
-		// show the view and pass the band to it
-		return view('albums.show', compact('album'));
+        // show the view and pass the band to it
+        return view('albums.show', compact('album'));
     }
 
     /**
@@ -83,7 +83,7 @@ class AlbumController extends Controller
     {
         //get all the bands
         $bands = Auth::user()->bands()->pluck('name', 'id');
-		// show the edit form and pass the album
+        // show the edit form and pass the album
         return view('albums.edit', compact('album', 'bands'));
     }
 

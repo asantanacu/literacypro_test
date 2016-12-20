@@ -18,15 +18,15 @@ class AlbumsTableSeeder extends Seeder
         $bands = DB::table('bands')->pluck('id')->all();
         foreach(range(1,100) as $index)
         {
-        	DB::table('albums')->insert([
-        		'band_id' => $faker->randomElement($bands),
-        		'name' => $faker->word . ' '. $faker->word . ' ' . $faker->word,
-        		'recorded_date' => $faker->date,
-        		'number_of_tracks' => $faker->randomElement([6,7,8,9,10,11,12,13,14,15]),
-        		'label' => $faker->randomElement($labels),
-        		'producer' => $faker->name,
-        		'genre' => $faker->randomElement($genres)
-        	]);
+            DB::table('albums')->insert([
+                'band_id' => $faker->randomElement($bands),
+                'name' => $faker->word . ' '. $faker->word . ' ' . $faker->word,
+                'recorded_date' => $faker->date,
+                'number_of_tracks' => $faker->randomElement([6,7,8,9,10,11,12,13,14,15]),
+                'label' => $faker->randomElement($labels),
+                'producer' => $faker->name,
+                'genre' => $faker->randomElement($genres)
+            ]);
         }
     }
 }
