@@ -170,6 +170,7 @@ return [
         //
         Collective\Html\HtmlServiceProvider::class,
         Kyslik\ColumnSortable\ColumnSortableServiceProvider::class,
+        Bosnadev\Repositories\Providers\RepositoryProvider::class,
 
         /*
          * Application Service Providers...
