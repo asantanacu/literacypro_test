@@ -1,18 +1,48 @@
 <?php
 
-use Illuminate\Http\Request;
+use Dingo\Api\Routing\Router;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+/** @var Router $api */
+$api = app(Router::class);
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:api');
+
+$api->version('v1', function (Router $api) {
+	$api->group(['middleware' => 'bindings','namespace' => 'App\Api\V1\Controllers'], function($api){
+	    $api->group(['prefix' => 'auth'], function(Router $api) {
+	        $api->post('signup', 'SignUpController@signUp');
+	        $api->post('login', 'LoginController@login');
+
+	        $api->post('recovery', 'ForgotPasswordController@sendResetEmail');
+	        $api->post('reset', 'ResetPasswordController@resetPassword');
+	    });
+
+	    $api->group(['middleware' => 'jwt.auth'], function(Router $api) {
+	        $api->get('protected', function() {
+	            return response()->json([
+	                'message' => 'Access to this item is only for authenticated user. Provide a token in your request!'
+	            ]);
+	        });
+
+	        $api->get('refresh', [
+	            'middleware' => 'jwt.refresh',
+	            function() {
+	                return response()->json([
+	                    'message' => 'By accessing this endpoint, you can refresh your access token at each request. Check out this response headers!'
+	                ]);
+	            }
+	        ]);
+
+	        $api->resource('band', 'BandController');
+
+	        $api->resource('album', 'AlbumController');
+	    });
+
+	    $api->get('hello', function() {
+	        return response()->json([
+	            'message' => 'This is a simple example of item returned by your APIs. Everyone can see it.'
+	        ]);
+	    });
+	});
+});
+
+

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BandRequest as Request;
 use App\Band;
-use Auth;
 
 class BandController extends Controller
 {
@@ -22,10 +21,10 @@ class BandController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // get all the bands
-        $bands = Auth::user()->bands()->sortable()->paginate(10);
+        $bands = $request->user()->bands()->sortable()->paginate(10);
 
         // load the view and pass the bands
         return view('bands.index', compact('bands'));
@@ -49,7 +48,7 @@ class BandController extends Controller
     public function store(Request $request)
     {
         //create band
-        Auth::user()->bands()->create($request->all());
+        $request->user()->bands()->create($request->all());
         //redirect
         return redirect()->route('band.index')->with('message', 'Successfully created band!');        
     }

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AlbumRequest as Request;
 use App\Album;
-use Auth;
 
 class AlbumController extends Controller
 {
@@ -23,12 +22,12 @@ class AlbumController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
         // get all the albums
-        $albums = Auth::user()->albums()->filterBand(\Request::get('band_id'))->sortable()->paginate(10);
+        $albums = $request->user()->albums()->filterBand(\Request::get('band_id'))->sortable()->paginate(10);
         //get all the bands
-        $bands = Auth::user()->bands()->pluck('name', 'id');
+        $bands = $request->user()->bands()->pluck('name', 'id');
 
         // load the view and pass the albums
         return view('albums.index', compact('albums', 'bands'));
@@ -39,10 +38,10 @@ class AlbumController extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //get all the bands
-        $bands = Auth::user()->bands()->pluck('name', 'id');
+        $bands = $request->user()->bands()->pluck('name', 'id');
         return view('albums.edit', compact('bands'));
     }
 
@@ -54,7 +53,7 @@ class AlbumController extends Controller
     public function store(Request $request)
     {
         //find band
-        $band = Auth::user()->bands()->findOrFail($request->input('band_id'));
+        $band = $request->user()->bands()->findOrFail($request->input('band_id'));
         //create album
         $band->albums()->create($request->all());
         //redirect
@@ -79,10 +78,10 @@ class AlbumController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function edit(Album $album)
+    public function edit(Album $album, Request $request)
     {
         //get all the bands
-        $bands = Auth::user()->bands()->pluck('name', 'id');
+        $bands = $request->user()->bands()->pluck('name', 'id');
         // show the edit form and pass the album
         return view('albums.edit', compact('album', 'bands'));
     }
@@ -96,7 +95,7 @@ class AlbumController extends Controller
     public function update(Album $album, Request $request)
     {
         //find band
-        $band = Auth::user()->bands()->findOrFail($request->input('band_id'));
+        $band = $request->user()->bands()->findOrFail($request->input('band_id'));
         // update album
         $album->band_id = $band->id;
         $album->fill($request->all())->save();
