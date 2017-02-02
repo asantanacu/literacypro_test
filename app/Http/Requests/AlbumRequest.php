@@ -23,7 +23,7 @@ class AlbumRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [];return $rules;
+        $rules = [];
 
         if($this->method() == 'POST' || $this->method() == 'PUT' || $this->method() == 'PATCH')
         {

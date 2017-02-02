@@ -18,7 +18,7 @@ class AlbumController extends Controller
      */
     public function __construct()
     {
-        
+        $this->middleware('can:access-album,album')->except('index','create','store');        
     }
 
     /**
@@ -28,7 +28,7 @@ class AlbumController extends Controller
      */
     public function index(Request $request)
     {
-        return $request->user()->albums()->paginate(6);
+        return $request->user()->albums()->paginate(10);
     }
 
     /**
@@ -74,7 +74,7 @@ class AlbumController extends Controller
         if($album->save())
             return $this->response->noContent();
         else
-            return $this->response->error('could_not_update_book', 500);
+            return $this->response->error('could_not_update_band', 500);
     }
 
     /**
